@@ -36,15 +36,16 @@
     }
 
     const startDrawingTouch = e => {
-        // fix drawing while playing for mobile
-        const touchPos = getTouchPos(canvas, e);
-        const X = touchPos.x;
-        const Y = touchPos.y;
-        $isCanvasPressed = true;
-        ctx.beginPath();
-        ctx.moveTo(X, Y);
+        if(!$isDrawingPlaying) {
+            const touchPos = getTouchPos(canvas, e);
+            const X = touchPos.x;
+            const Y = touchPos.y;
+            $isCanvasPressed = true;
+            ctx.beginPath();
+            ctx.moveTo(X, Y);
 
-        $drawing = [...$drawing, 1];
+            $drawing = [...$drawing, 1];
+        }
     }
 
     const draw = e => {
@@ -60,7 +61,7 @@
     }
 
     const drawTouch = e => {
-        if($isCanvasPressed) {
+        if($isCanvasPressed && !$isDrawingPlaying) {
             const touchPos = getTouchPos(canvas, e);
             const X = touchPos.x;
             const Y = touchPos.y;
