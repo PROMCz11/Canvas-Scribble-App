@@ -4,6 +4,7 @@
     import { isCanvasPressed } from "$lib/stores";
     import { isDrawingPlaying } from "$lib/stores";
     import { drawing } from "$lib/stores";
+    import { strokeColor } from "$lib/stores";
 
     let canvas;
     let ctx;
@@ -11,7 +12,6 @@
     onMount(() => {
         ctx = canvas.getContext('2d');
         handleCanvasSizing();
-        ctx.strokeStyle = "white";
     })
 
     const getTouchPos = (canvas, touchEvent) => {
@@ -56,7 +56,7 @@
             ctx.moveTo(X, Y);
             ctx.stroke();
 
-            $drawing = [...$drawing, { x: X, y: Y }];
+            $drawing = [...$drawing, { x: X, y: Y, strokeColor: $strokeColor }];
         }
     }
 
@@ -69,7 +69,7 @@
             ctx.moveTo(X, Y);
             ctx.stroke();
 
-            $drawing = [...$drawing, { x: X, y: Y }];
+            $drawing = [...$drawing, { x: X, y: Y, strokeColor: $strokeColor }];
         }
     }
 
@@ -82,11 +82,18 @@
     const handleCanvasSizing = () => {
         canvas.width = canvas.clientWidth;
         canvas.height = canvas.clientHeight;
+        
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 5;
+        ctx.lineJoin = "round";
+        ctx.lineCap = "round";
     }
 
     const clearCanvas = () => {
-        $drawing = [];
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if(!$isDrawingPlaying) {
+            $drawing = [];
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
     }
 
     const delay = (ms) => {
@@ -94,33 +101,46 @@
     }
 
     const playDrawing = async () => {
-        $isDrawingPlaying = true;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.beginPath();
+        if(!$isDrawingPlaying) {
+            $isDrawingPlaying = true;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
 
-        for (let index = 0; index < $drawing.length; index++) {
-            const moveSet = $drawing[index];
-            
-            await delay(5);
+            for (let index = 0; index < $drawing.length; index++) {
+                const moveSet = $drawing[index];
+                
+                await delay(5);
 
-            if (moveSet === 1) {
-                const nextMoveSet = $drawing[index + 1];
-                if (nextMoveSet) {
-                    ctx.moveTo(nextMoveSet.x, nextMoveSet.y);
+                if (moveSet === 1) {
+                    ctx.stroke();
+                    ctx.beginPath();
+                    const nextMoveSet = $drawing[index + 1];
+                    if (nextMoveSet) {
+                        ctx.moveTo(nextMoveSet.x, nextMoveSet.y);
+                    }
                 }
-            }
-            
-            else {
-                ctx.lineTo(moveSet.x, moveSet.y);
-                ctx.moveTo(moveSet.x, moveSet.y);
+                
+                else {
+                    ctx.strokeStyle = moveSet.strokeColor;
+                    ctx.lineTo(moveSet.x, moveSet.y);
+                    ctx.moveTo(moveSet.x, moveSet.y);
+                }
+
+                ctx.stroke();
             }
 
             ctx.stroke();
+            $isDrawingPlaying = false;
         }
-
-        ctx.stroke();
-        $isDrawingPlaying = false;
     }
+
+    const changeStrokeColor = (color) => {
+        if(ctx) {
+            ctx.strokeStyle = color;
+        }
+    }
+
+    $: changeStrokeColor($strokeColor);
 </script>
 
 <main>
