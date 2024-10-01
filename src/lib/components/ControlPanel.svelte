@@ -4,6 +4,7 @@
     import { strokeColor } from "$lib/stores";
     import { isDrawingPlaying } from "$lib/stores";
     import { availableColors } from "$lib/stores";
+    import { history } from "$lib/stores";
     const dispatch = createEventDispatcher();
 </script>
 
@@ -13,9 +14,12 @@
         <p>Stroke Overview</p>
         <div style="background-color: {$strokeColor}"></div>
     </div>
-    <!-- <p>Controls</p> -->
     <button on:click={() => dispatch("play")}>Play</button>
     <button on:click={() => dispatch("clear")}>Clear</button>
+    <button on:click={() => dispatch("undo")}>Undo</button>
+    {#if $history.length}
+        <button on:click={() => dispatch("redo")}>Redo</button>
+    {/if}
     <button on:click={() => console.log($drawing)}>Display<br>Positions<br>(in console)</button>
     <div class="color-selector-container">
         {#each $availableColors as { name, hex }}

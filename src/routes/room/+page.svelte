@@ -5,6 +5,7 @@
     import { isDrawingPlaying } from "$lib/stores";
     import { drawing } from "$lib/stores";
     import { strokeColor } from "$lib/stores";
+    import { history } from "$lib/stores";
 
     let canvas;
     let ctx;
@@ -75,8 +76,6 @@
 
     const stopDrawing = e => {
         $isCanvasPressed = false;
-
-        console.log("End:", e.offsetX, e.offsetY);
     }
 
     const handleCanvasSizing = () => {
@@ -92,6 +91,7 @@
     const clearCanvas = () => {
         if(!$isDrawingPlaying) {
             $drawing = [];
+            $history = [];
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
     }
@@ -141,12 +141,96 @@
     }
 
     $: changeStrokeColor($strokeColor);
+
+    // const splitIntoChunks = (array) => {
+    //     const chunks = [];
+    //     let currentChunk = [];
+
+    //     array.forEach((item) => {
+    //         if (item === 1) {
+    //             if (currentChunk.length) {
+    //                 chunks.push(currentChunk);
+    //                 currentChunk = [];
+    //             }
+    //         } else {
+    //             currentChunk.push(item);
+    //         }
+    //     });
+
+    //     if (currentChunk.length) {
+    //         chunks.push(currentChunk);
+    //     }
+
+    //     return chunks;
+    // };
+
+    // const joinChunks = (chunks) => {
+    //     const joinedArray = [];
+
+    //     chunks.forEach(chunk => {
+    //         if (chunk.length > 0) {
+    //             joinedArray.push(1);
+    //             joinedArray.push(...chunk);
+    //         }
+    //     });
+
+    //     return joinedArray;
+    // };
+
+    // const split = () => {
+    //     const chunks = splitIntoChunks($drawing);
+    //     console.log(chunks);
+    // };
+
+    const undo = () => {
+        const indexOfLastStrokeStart = $drawing.lastIndexOf(1);
+        $history = [...$history, ...$drawing.slice(indexOfLastStrokeStart)];
+        $drawing.splice(indexOfLastStrokeStart);
+        drawInstructions();
+    }
+
+    const redo = () => {
+        const indexOfLastStrokeStart = $history.lastIndexOf(1);
+        $drawing = [...$drawing, ...$history.slice(indexOfLastStrokeStart)];
+        drawInstructions();
+        $history = [];
+    }
+
+    const drawInstructions = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+
+        for (let index = 0; index < $drawing.length; index++) {
+            const moveSet = $drawing[index];
+
+            if (moveSet === 1) {
+                ctx.stroke();
+                ctx.beginPath();
+                const nextMoveSet = $drawing[index + 1];
+                if (nextMoveSet) {
+                    ctx.moveTo(nextMoveSet.x, nextMoveSet.y);
+                }
+            }
+            
+            else {
+                ctx.strokeStyle = moveSet.strokeColor;
+                ctx.lineTo(moveSet.x, moveSet.y);
+                ctx.moveTo(moveSet.x, moveSet.y);
+            }
+
+            ctx.stroke();
+        }
+
+        ctx.stroke();
+    }
 </script>
 
 <main>
     <ControlPanel 
         on:clear={clearCanvas}
         on:play={playDrawing}
+        on:undo={undo}
+        on:redo={redo}
     />
     <canvas
         bind:this={canvas}

@@ -3,6 +3,7 @@ import { writable } from "svelte/store";
 export let isCanvasPressed = writable(false);
 export let isDrawingPlaying = writable(false);
 export let drawing = writable([]);
+export let history = writable([]);
 export let strokeColor = writable("white");
 export let availableColors = writable([
     { name: "white", hex: "#FFFFFF" },
