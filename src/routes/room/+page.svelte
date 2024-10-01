@@ -82,7 +82,7 @@
     const handleCanvasSizing = () => {
         canvas.width = canvas.clientWidth;
         canvas.height = canvas.clientHeight;
-        
+
         ctx.strokeStyle = "white";
         ctx.lineWidth = 5;
         ctx.lineJoin = "round";
@@ -169,5 +169,11 @@
     canvas {
         flex: 1;
         /* border: 2px solid limegreen; */
+    }
+
+    @media (max-width: 1000px) {
+        main {
+            flex-direction: column;
+        }
     }
 </style>

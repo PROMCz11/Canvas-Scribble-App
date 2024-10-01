@@ -13,7 +13,7 @@
         <p>Stroke Overview</p>
         <div style="background-color: {$strokeColor}"></div>
     </div>
-    <p>Controls</p>
+    <!-- <p>Controls</p> -->
     <button on:click={() => dispatch("play")}>Play</button>
     <button on:click={() => dispatch("clear")}>Clear</button>
     <button on:click={() => console.log($drawing)}>Display<br>Positions<br>(in console)</button>
@@ -85,6 +85,7 @@
         width: 30px;
         height: 30px;
         border-radius: 50%;
+        margin: auto;
     }
 
     .play-block-screen {
@@ -94,5 +95,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    @media (max-width: 1000px) {
+        .component {
+            flex-direction: row;
+            flex-wrap: wrap;
+            border: 0;
+            border-bottom: 1px solid white;
+        }
+        
+        .component > * {
+            /* border: 1px solid limegreen; */
+        }
     }
 </style>
