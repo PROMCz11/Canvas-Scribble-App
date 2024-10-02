@@ -1,11 +1,11 @@
 <script>
     import { createEventDispatcher } from "svelte";
-    import { drawing } from "$lib/stores";
     import { strokeColor } from "$lib/stores";
     import { strokeWidth } from "$lib/stores";
     import { isDrawingPlaying } from "$lib/stores";
     import { availableColors } from "$lib/stores";
-    import { history } from "$lib/stores";
+    import { tree } from "$lib/stores";
+    import { redoHistory } from "$lib/stores";
     const dispatch = createEventDispatcher();
 </script>
 
@@ -17,9 +17,13 @@
     </div>
     <button on:click={() => dispatch("play")}>Play</button>
     <button on:click={() => dispatch("clear")}>Clear</button>
-    <button on:click={() => dispatch("undo")}>Undo</button>
-    <button on:click={() => dispatch("redo")}>Redo</button>
-    <button on:click={() => console.log($drawing)}>Display<br>Positions<br>(in console)</button>
+    {#if $tree.length}
+        <button on:click={() => dispatch("undo")}>Undo</button>
+    {/if}
+    {#if $redoHistory.length}
+        <button on:click={() => dispatch("redo")}>Redo</button>
+    {/if}
+    <button on:click={() => console.log($tree)}>Display<br>Positions<br>(in console)</button>
     <div class="color-selector-container">
         {#each $availableColors as { name, hex }}
             <button

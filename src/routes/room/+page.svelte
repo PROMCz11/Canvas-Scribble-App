@@ -3,10 +3,8 @@
     import ControlPanel from "../../lib/components/ControlPanel.svelte";
     import { isCanvasPressed } from "$lib/stores";
     import { isDrawingPlaying } from "$lib/stores";
-    import { drawing } from "$lib/stores";
     import { strokeColor } from "$lib/stores";
     import { strokeWidth } from "$lib/stores";
-    import { history } from "$lib/stores";
 
     import { tree } from "$lib/stores";
     import { redoHistory } from "$lib/stores";
@@ -14,8 +12,8 @@
     let canvas;
     let ctx;
 
-    $: console.log($tree);
-    $: console.log($redoHistory);
+    // $: console.log($tree);
+    // $: console.log($redoHistory);
 
     onMount(() => {
         ctx = canvas.getContext('2d');
@@ -39,8 +37,6 @@
             ctx.beginPath();
             ctx.moveTo(X, Y);
 
-            $drawing = [...$drawing, 1];
-
             if($tree[$tree.length - 1] === 0) {
                 $tree.pop();
                 $tree = $tree;
@@ -59,8 +55,6 @@
             ctx.beginPath();
             ctx.moveTo(X, Y);
 
-            $drawing = [...$drawing, 1];
-
             if($tree[$tree.length - 1] === 0) {
                 $tree.pop();
                 $tree = $tree;
@@ -78,8 +72,6 @@
             ctx.moveTo(X, Y);
             ctx.stroke();
 
-            $drawing = [...$drawing, { x: X, y: Y, strokeColor: $strokeColor, strokeWidth: $strokeWidth }];
-
             $tree = [...$tree, { x: X, y: Y, strokeColor: $strokeColor, strokeWidth: $strokeWidth }];
         }
     }
@@ -92,8 +84,6 @@
             ctx.lineTo(X, Y);
             ctx.moveTo(X, Y);
             ctx.stroke();
-
-            $drawing = [...$drawing, { x: X, y: Y, strokeColor: $strokeColor, strokeWidth: $strokeWidth }];
 
             $tree = [...$tree, { x: X, y: Y, strokeColor: $strokeColor, strokeWidth: $strokeWidth }];
         }
@@ -115,8 +105,6 @@
 
     const clearCanvas = () => {
         if(!$isDrawingPlaying) {
-            $drawing = [];
-            $history = [];
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             $tree = [];
@@ -181,52 +169,7 @@
 
     $: changeStrokeWidth($strokeWidth);
 
-    // const splitIntoChunks = (array) => {
-    //     const chunks = [];
-    //     let currentChunk = [];
-
-    //     array.forEach((item) => {
-    //         if (item === 1) {
-    //             if (currentChunk.length) {
-    //                 chunks.push(currentChunk);
-    //                 currentChunk = [];
-    //             }
-    //         } else {
-    //             currentChunk.push(item);
-    //         }
-    //     });
-
-    //     if (currentChunk.length) {
-    //         chunks.push(currentChunk);
-    //     }
-
-    //     return chunks;
-    // };
-
-    // const joinChunks = (chunks) => {
-    //     const joinedArray = [];
-
-    //     chunks.forEach(chunk => {
-    //         if (chunk.length > 0) {
-    //             joinedArray.push(1);
-    //             joinedArray.push(...chunk);
-    //         }
-    //     });
-
-    //     return joinedArray;
-    // };
-
-    // const split = () => {
-    //     const chunks = splitIntoChunks($drawing);
-    //     console.log(chunks);
-    // };
-
     const undo = () => {
-        // const indexOfLastStrokeStart = $drawing.lastIndexOf(1);
-        // $history = [...$history, ...$drawing.slice(indexOfLastStrokeStart)];
-        // $drawing.splice(indexOfLastStrokeStart);
-        // drawInstructions();
-        
         if($tree[$tree.length - 1] === 0) {
             $tree.pop();
             $tree = $tree;
@@ -240,18 +183,12 @@
     }
 
     const redo = () => {
-        // const indexOfLastStrokeStart = $history.lastIndexOf(1);
-        // $drawing = [...$drawing, ...$history.slice(indexOfLastStrokeStart)];
-        // drawInstructions();
-        // $history = [];
-
         if($tree[$tree.length - 1] === 0) {
             $tree.pop();
             $tree = $tree;
 
             const indexOfLastStrokeStart = $redoHistory.lastIndexOf(1);
             $tree = [...$tree, ...$redoHistory.slice(indexOfLastStrokeStart), 0];
-            // $redoHistory = [];
             $redoHistory.splice(indexOfLastStrokeStart);
 
             drawInstructions();
