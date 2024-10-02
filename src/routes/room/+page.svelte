@@ -8,8 +8,14 @@
     import { strokeWidth } from "$lib/stores";
     import { history } from "$lib/stores";
 
+    import { tree } from "$lib/stores";
+    import { redoHistory } from "$lib/stores";
+
     let canvas;
     let ctx;
+
+    $: console.log($tree);
+    $: console.log($redoHistory);
 
     onMount(() => {
         ctx = canvas.getContext('2d');
@@ -34,6 +40,13 @@
             ctx.moveTo(X, Y);
 
             $drawing = [...$drawing, 1];
+
+            if($tree[$tree.length - 1] === 0) {
+                $tree.pop();
+                $tree = $tree;
+                $redoHistory = [];
+            }
+            $tree = [...$tree, 1];
         }
     }
 
@@ -47,6 +60,13 @@
             ctx.moveTo(X, Y);
 
             $drawing = [...$drawing, 1];
+
+            if($tree[$tree.length - 1] === 0) {
+                $tree.pop();
+                $tree = $tree;
+                $redoHistory = [];
+            }
+            $tree = [...$tree, 1];
         }
     }
 
@@ -59,6 +79,8 @@
             ctx.stroke();
 
             $drawing = [...$drawing, { x: X, y: Y, strokeColor: $strokeColor, strokeWidth: $strokeWidth }];
+
+            $tree = [...$tree, { x: X, y: Y, strokeColor: $strokeColor, strokeWidth: $strokeWidth }];
         }
     }
 
@@ -72,6 +94,8 @@
             ctx.stroke();
 
             $drawing = [...$drawing, { x: X, y: Y, strokeColor: $strokeColor, strokeWidth: $strokeWidth }];
+
+            $tree = [...$tree, { x: X, y: Y, strokeColor: $strokeColor, strokeWidth: $strokeWidth }];
         }
     }
 
@@ -94,6 +118,9 @@
             $drawing = [];
             $history = [];
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            $tree = [];
+            $redoHistory = [];
         }
     }
 
@@ -133,6 +160,8 @@
 
             ctx.stroke();
             $isDrawingPlaying = false;
+            ctx.strokeStyle = $strokeColor;
+            ctx.lineWidth = $strokeWidth;
         }
     }
 
@@ -193,30 +222,53 @@
     // };
 
     const undo = () => {
-        const indexOfLastStrokeStart = $drawing.lastIndexOf(1);
-        $history = [...$history, ...$drawing.slice(indexOfLastStrokeStart)];
-        $drawing.splice(indexOfLastStrokeStart);
+        // const indexOfLastStrokeStart = $drawing.lastIndexOf(1);
+        // $history = [...$history, ...$drawing.slice(indexOfLastStrokeStart)];
+        // $drawing.splice(indexOfLastStrokeStart);
+        // drawInstructions();
+        
+        if($tree[$tree.length - 1] === 0) {
+            $tree.pop();
+            $tree = $tree;
+        }
+        const indexOfLastStrokeStart = $tree.lastIndexOf(1);
+        $redoHistory = [...$redoHistory, ...$tree.slice(indexOfLastStrokeStart)];
+        $tree.splice(indexOfLastStrokeStart);
+        $tree = [...$tree, 0];
+
         drawInstructions();
     }
 
     const redo = () => {
-        const indexOfLastStrokeStart = $history.lastIndexOf(1);
-        $drawing = [...$drawing, ...$history.slice(indexOfLastStrokeStart)];
-        drawInstructions();
-        $history = [];
+        // const indexOfLastStrokeStart = $history.lastIndexOf(1);
+        // $drawing = [...$drawing, ...$history.slice(indexOfLastStrokeStart)];
+        // drawInstructions();
+        // $history = [];
+
+        if($tree[$tree.length - 1] === 0) {
+            $tree.pop();
+            $tree = $tree;
+
+            const indexOfLastStrokeStart = $redoHistory.lastIndexOf(1);
+            $tree = [...$tree, ...$redoHistory.slice(indexOfLastStrokeStart), 0];
+            // $redoHistory = [];
+            $redoHistory.splice(indexOfLastStrokeStart);
+
+            drawInstructions();
+        }
     }
 
     const drawInstructions = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
 
-        for (let index = 0; index < $drawing.length; index++) {
-            const moveSet = $drawing[index];
+        for (let index = 0; index < $tree.length; index++) {
+            const moveSet = $tree[index];
 
             if (moveSet === 1) {
                 ctx.stroke();
                 ctx.beginPath();
-                const nextMoveSet = $drawing[index + 1];
+                const nextMoveSet = $tree[index + 1];
                 if (nextMoveSet) {
                     ctx.moveTo(nextMoveSet.x, nextMoveSet.y);
                 }
@@ -233,6 +285,8 @@
         }
 
         ctx.stroke();
+        ctx.strokeStyle = $strokeColor;
+        ctx.lineWidth = $strokeWidth;
     }
 </script>
 

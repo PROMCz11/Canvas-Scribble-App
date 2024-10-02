@@ -14,3 +14,6 @@ export let availableColors = writable([
     { name: "Yellow", hex: "#FFFF00" },
     { name: "Purple", hex: "#800080" }
 ])
+
+export let tree = writable([]);
+export let redoHistory = writable([]);

@@ -18,9 +18,7 @@
     <button on:click={() => dispatch("play")}>Play</button>
     <button on:click={() => dispatch("clear")}>Clear</button>
     <button on:click={() => dispatch("undo")}>Undo</button>
-    {#if $history.length}
-        <button on:click={() => dispatch("redo")}>Redo</button>
-    {/if}
+    <button on:click={() => dispatch("redo")}>Redo</button>
     <button on:click={() => console.log($drawing)}>Display<br>Positions<br>(in console)</button>
     <div class="color-selector-container">
         {#each $availableColors as { name, hex }}
