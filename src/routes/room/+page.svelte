@@ -134,15 +134,15 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.beginPath();
 
-            for (let index = 0; index < $drawing.length; index++) {
-                const moveSet = $drawing[index];
+            for (let index = 0; index < $tree.length; index++) {
+                const moveSet = $tree[index];
                 
                 await delay(5);
 
                 if (moveSet === 1) {
                     ctx.stroke();
                     ctx.beginPath();
-                    const nextMoveSet = $drawing[index + 1];
+                    const nextMoveSet = $tree[index + 1];
                     if (nextMoveSet) {
                         ctx.moveTo(nextMoveSet.x, nextMoveSet.y);
                     }
