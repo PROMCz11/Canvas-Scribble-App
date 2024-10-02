@@ -13,7 +13,7 @@
     <p>Room #32987</p>
     <div class="stroke-display">
         <p>Stroke Overview</p>
-        <div style="background-color: {$strokeColor}"></div>
+        <div style="background-color: {$strokeColor}; width: {$strokeWidth * 1.15}px;"></div>
     </div>
     <button on:click={() => dispatch("play")}>Play</button>
     <button on:click={() => dispatch("clear")}>Clear</button>
@@ -88,7 +88,7 @@
 
     .stroke-display > div {
         width: 30px;
-        height: 30px;
+        aspect-ratio: 1;
         border-radius: 50%;
         margin: auto;
     }
