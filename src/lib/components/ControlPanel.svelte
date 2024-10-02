@@ -2,6 +2,7 @@
     import { createEventDispatcher } from "svelte";
     import { drawing } from "$lib/stores";
     import { strokeColor } from "$lib/stores";
+    import { strokeWidth } from "$lib/stores";
     import { isDrawingPlaying } from "$lib/stores";
     import { availableColors } from "$lib/stores";
     import { history } from "$lib/stores";
@@ -31,6 +32,8 @@
             ></button>
         {/each}
     </div>
+    <input type="range" min="2" max="40" step="2" bind:value={$strokeWidth}>
+    <p>Stroke width: {$strokeWidth}</p>
     <div class="to-be-deleted">
         <p>Under Construction</p>
         <a href="https://vision-project-showcase.pages.dev/" target="_blank">Visit our website<br> for more projects</a>
@@ -107,10 +110,6 @@
             flex-wrap: wrap;
             border: 0;
             border-bottom: 1px solid white;
-        }
-        
-        .component > * {
-            /* border: 1px solid limegreen; */
-        }
+        }   
     }
 </style>

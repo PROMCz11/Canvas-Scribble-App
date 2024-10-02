@@ -5,6 +5,7 @@
     import { isDrawingPlaying } from "$lib/stores";
     import { drawing } from "$lib/stores";
     import { strokeColor } from "$lib/stores";
+    import { strokeWidth } from "$lib/stores";
     import { history } from "$lib/stores";
 
     let canvas;
@@ -57,7 +58,7 @@
             ctx.moveTo(X, Y);
             ctx.stroke();
 
-            $drawing = [...$drawing, { x: X, y: Y, strokeColor: $strokeColor }];
+            $drawing = [...$drawing, { x: X, y: Y, strokeColor: $strokeColor, strokeWidth: $strokeWidth }];
         }
     }
 
@@ -70,7 +71,7 @@
             ctx.moveTo(X, Y);
             ctx.stroke();
 
-            $drawing = [...$drawing, { x: X, y: Y, strokeColor: $strokeColor }];
+            $drawing = [...$drawing, { x: X, y: Y, strokeColor: $strokeColor, strokeWidth: $strokeWidth }];
         }
     }
 
@@ -82,8 +83,8 @@
         canvas.width = canvas.clientWidth;
         canvas.height = canvas.clientHeight;
 
-        ctx.strokeStyle = "white";
-        ctx.lineWidth = 5;
+        ctx.strokeStyle = $strokeColor;
+        ctx.lineWidth = $strokeWidth;
         ctx.lineJoin = "round";
         ctx.lineCap = "round";
     }
@@ -122,6 +123,7 @@
                 
                 else {
                     ctx.strokeStyle = moveSet.strokeColor;
+                    ctx.lineWidth = moveSet.strokeWidth;
                     ctx.lineTo(moveSet.x, moveSet.y);
                     ctx.moveTo(moveSet.x, moveSet.y);
                 }
@@ -141,6 +143,14 @@
     }
 
     $: changeStrokeColor($strokeColor);
+
+    const changeStrokeWidth = (width) => {
+        if(ctx) {
+            ctx.lineWidth = width;
+        }
+    }
+
+    $: changeStrokeWidth($strokeWidth);
 
     // const splitIntoChunks = (array) => {
     //     const chunks = [];
@@ -214,6 +224,7 @@
             
             else {
                 ctx.strokeStyle = moveSet.strokeColor;
+                ctx.lineWidth = moveSet.strokeWidth;
                 ctx.lineTo(moveSet.x, moveSet.y);
                 ctx.moveTo(moveSet.x, moveSet.y);
             }
