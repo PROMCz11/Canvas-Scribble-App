@@ -32,7 +32,7 @@
         gap: 1rem;
     }
 
-    .signup-info {
+    .signup-info > p {
         margin-top: 1rem;
     }
 

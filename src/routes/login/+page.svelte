@@ -30,7 +30,7 @@
         gap: 1rem;
     }
 
-    .login-info {
+    .login-info > p {
         margin-top: 1rem;
     }
 
