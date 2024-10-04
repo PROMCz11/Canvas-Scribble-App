@@ -121,3 +121,9 @@ input[type="range"]::-moz-range-thumb {
     height: 2rem;
     width: 1rem;
 }
+
+input[type="text"] {
+    background-color: black;
+    border: 1px solid white;
+    color: white;
+}

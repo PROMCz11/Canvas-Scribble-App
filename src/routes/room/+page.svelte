@@ -12,13 +12,10 @@
     let canvas;
     let ctx;
 
-    // $: console.log($tree);
-    // $: console.log($redoHistory);
-
     onMount(() => {
         ctx = canvas.getContext('2d');
         handleCanvasSizing();
-    })
+    });
 
     const getTouchPos = (canvas, touchEvent) => {
         const rect = canvas.getBoundingClientRect();

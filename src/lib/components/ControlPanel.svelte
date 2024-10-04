@@ -36,6 +36,7 @@
     </div>
     <input type="range" min="2" max="40" step="2" bind:value={$strokeWidth}>
     <p>Stroke width: {$strokeWidth}</p>
+    <a href="/">Go back to<br>main menu</a>
     <div class="to-be-deleted">
         <p>Under Construction</p>
         <a href="https://vision-project-showcase.pages.dev/" target="_blank">Visit our website<br> for more projects</a>

@@ -5,8 +5,8 @@
         <div>
             <a href="/"><button>Create Room</button></a>
             <a href="/"><button>Join Room</button></a>
-            <a href="/"><button>Signup</button></a>
-            <a href="/"><button>Login</button></a>
+            <a href="signup"><button>Signup</button></a>
+            <a href="/login"><button>Login</button></a>
             <a href="room"><button>Canvas Sandbox</button></a>
         </div>
     </div>
