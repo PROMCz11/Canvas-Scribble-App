@@ -13,7 +13,7 @@
     <button>Login</button>
     <div>
         <p>Don't have an account?</p>
-        <a href="signup">Login</a>
+        <a href="signup">Signup</a>
     </div>
     <a href="/">Go back</a>
 </main>
