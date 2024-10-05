@@ -15,9 +15,9 @@
         <p>Stroke Overview</p>
         <div style="background-color: {$strokeColor}; width: {$strokeWidth * 1.15}px;"></div>
     </div>
-    <button on:click={() => dispatch("play")}>Play</button>
-    <button on:click={() => dispatch("clear")}>Clear</button>
     {#if $tree.length}
+        <button on:click={() => dispatch("play")}>Play</button>
+        <button on:click={() => dispatch("clear")}>Clear</button>
         <button on:click={() => dispatch("undo")}>Undo</button>
     {/if}
     {#if $redoHistory.length}
