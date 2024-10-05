@@ -231,6 +231,11 @@
     }
 </script>
 
+<svelte:window on:resize={() => {
+    handleCanvasSizing();
+    drawInstructions();
+}}/>
+
 <main>
     <ControlPanel 
         on:clear={clearCanvas}
