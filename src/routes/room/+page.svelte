@@ -122,7 +122,9 @@
             for (let index = 0; index < $tree.length; index++) {
                 const moveSet = $tree[index];
                 
-                await delay(5);
+                if($isDrawingPlaying) {
+                    await delay(5); 
+                }
 
                 if (moveSet === 1) {
                     ctx.stroke();
@@ -222,6 +224,11 @@
         ctx.strokeStyle = $strokeColor;
         ctx.lineWidth = $strokeWidth;
     }
+
+    const stopAnimation = () => {
+        $isDrawingPlaying = false;
+        drawInstructions();
+    }
 </script>
 
 <main>
@@ -230,6 +237,7 @@
         on:play={playDrawing}
         on:undo={undo}
         on:redo={redo}
+        on:stopAnimation={stopAnimation}
     />
     <canvas
         bind:this={canvas}

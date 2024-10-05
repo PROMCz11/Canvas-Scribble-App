@@ -44,7 +44,8 @@
 
     {#if $isDrawingPlaying}
         <div class="play-block-screen">
-            Playing
+            <p>Playing</p>
+            <button on:click={() => dispatch("stopAnimation")}>Stop</button>
         </div>
     {/if}
 </div>
@@ -103,8 +104,10 @@
         position: absolute;
         inset: 0;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: .5rem;
     }
 
     @media (max-width: 1000px) {
