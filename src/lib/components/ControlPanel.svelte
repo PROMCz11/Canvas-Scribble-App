@@ -4,8 +4,8 @@
     import { strokeWidth } from "$lib/stores";
     import { isDrawingPlaying } from "$lib/stores";
     import { availableColors } from "$lib/stores";
-    import { tree } from "$lib/stores";
-    import { redoHistory } from "$lib/stores";
+    import { savedStates } from "$lib/stores";
+    import { redoStates } from "$lib/stores";
     const dispatch = createEventDispatcher();
 </script>
 
@@ -15,15 +15,14 @@
         <p>Stroke Overview</p>
         <div style="background-color: {$strokeColor}; width: {$strokeWidth * 1.15}px;"></div>
     </div>
-    {#if $tree.length}
-        <button on:click={() => dispatch("play")}>Play</button>
+    {#if $savedStates.length}
         <button on:click={() => dispatch("clear")}>Clear</button>
         <button on:click={() => dispatch("undo")}>Undo</button>
     {/if}
-    {#if $redoHistory.length}
+    {#if $redoStates.length}
         <button on:click={() => dispatch("redo")}>Redo</button>
     {/if}
-    <button on:click={() => console.log($tree)}>Display<br>Positions<br>(in console)</button>
+    <button on:click={() => dispatch("logData")}>Log data <br>(in console)</button>
     <div class="color-selector-container">
         {#each $availableColors as { name, hex }}
             <button
