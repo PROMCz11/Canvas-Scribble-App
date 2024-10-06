@@ -102,45 +102,6 @@
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    // const playDrawing = async () => {
-    //     if(!$isDrawingPlaying) {
-    //         $isDrawingPlaying = true;
-    //         ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //         ctx.beginPath();
-
-    //         for (let index = 0; index < $tree.length; index++) {
-    //             const moveSet = $tree[index];
-                
-    //             if($isDrawingPlaying) {
-    //                 await delay(5); 
-    //             }
-
-    //             if (moveSet === 1) {
-    //                 ctx.stroke();
-    //                 ctx.beginPath();
-    //                 const nextMoveSet = $tree[index + 1];
-    //                 if (nextMoveSet) {
-    //                     ctx.moveTo(nextMoveSet.x, nextMoveSet.y);
-    //                 }
-    //             }
-                
-    //             else {
-    //                 ctx.strokeStyle = moveSet.strokeColor;
-    //                 ctx.lineWidth = moveSet.strokeWidth;
-    //                 ctx.lineTo(moveSet.x, moveSet.y);
-    //                 ctx.moveTo(moveSet.x, moveSet.y);
-    //             }
-
-    //             ctx.stroke();
-    //         }
-
-    //         ctx.stroke();
-    //         $isDrawingPlaying = false;
-    //         ctx.strokeStyle = $strokeColor;
-    //         ctx.lineWidth = $strokeWidth;
-    //     }
-    // }
-
     const changeStrokeColor = (color) => {
         if(ctx) {
             ctx.strokeStyle = color;
@@ -172,51 +133,15 @@
     const redo = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         const savedState = $redoStates.pop();
-        $redoStates = $redoStates; // For Svelte's reactivity system
+        $redoStates = $redoStates;
         $savedStates.push(savedState);
         const img = new Image();
         img.src = savedState;
         img.onload = () => ctx.drawImage(img, 0, 0);
     }
 
-    // const drawInstructions = () => {
-    //     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //     ctx.beginPath();
-
-    //     for (let index = 0; index < $tree.length; index++) {
-    //         const moveSet = $tree[index];
-
-    //         if (moveSet === 1) {
-    //             ctx.stroke();
-    //             ctx.beginPath();
-    //             const nextMoveSet = $tree[index + 1];
-    //             if (nextMoveSet) {
-    //                 ctx.moveTo(nextMoveSet.x, nextMoveSet.y);
-    //             }
-    //         }
-            
-    //         else {
-    //             ctx.strokeStyle = moveSet.strokeColor;
-    //             ctx.lineWidth = moveSet.strokeWidth;
-    //             ctx.lineTo(moveSet.x, moveSet.y);
-    //             ctx.moveTo(moveSet.x, moveSet.y);
-    //         }
-
-    //         ctx.stroke();
-    //     }
-
-    //     ctx.stroke();
-    //     ctx.strokeStyle = $strokeColor;
-    //     ctx.lineWidth = $strokeWidth;
-    // }
-
-    // const stopAnimation = () => {
-    //     $isDrawingPlaying = false;
-    //     drawInstructions();
-    // }
-
     const logData = () => {
-        console.log("REDO:" , $redoStates, "UNDO:", $savedStates);
+        console.log("UNDO:", $savedStates, "REDO:" , $redoStates);
     }
 </script>
 
