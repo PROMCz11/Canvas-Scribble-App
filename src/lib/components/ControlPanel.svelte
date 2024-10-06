@@ -15,8 +15,10 @@
         <p>Stroke Overview</p>
         <div style="background-color: {$strokeColor}; width: {$strokeWidth * 1.15}px;"></div>
     </div>
-    {#if $savedStates.length}
+    {#if $savedStates.length || $redoStates.length}
         <button on:click={() => dispatch("clear")}>Clear</button>
+    {/if}
+    {#if $savedStates.length}
         <button on:click={() => dispatch("undo")}>Undo</button>
     {/if}
     {#if $redoStates.length}

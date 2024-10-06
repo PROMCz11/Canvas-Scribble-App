@@ -222,7 +222,9 @@
 
 <svelte:window on:resize={() => {
     handleCanvasSizing();
-    // redraw using the image system, maybe redraw the last input in the savedStates function after clearing the canvas
+    const img = new Image();
+    img.src = $savedStates[$savedStates.length - 1];
+    img.onload = () => ctx.drawImage(img, 0, 0);
 }}/>
 
 <main>
