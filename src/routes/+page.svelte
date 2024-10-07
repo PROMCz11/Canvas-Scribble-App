@@ -8,6 +8,7 @@
             <a href="signup"><button>Signup</button></a>
             <a href="/login"><button>Login</button></a>
             <a href="room"><button>Canvas Sandbox</button></a>
+            <a href="testing"><button>Testing</button></a>
         </div>
     </div>
 </main>
