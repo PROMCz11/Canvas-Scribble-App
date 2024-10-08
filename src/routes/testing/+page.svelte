@@ -37,21 +37,25 @@
 
 <main>
     {#if !connected}
-        <input on:keydown={e => {
-            if(e.key === "Enter") {
-                establishConnection();
-            }
-        }} bind:value={nameFromInput} placeholder="Enter player name" type="text">
-        <button on:click={establishConnection}>Connect</button>
+    <input on:keydown={e => {
+        if(e.key === "Enter") {
+            establishConnection();
+        }
+    }} bind:value={nameFromInput} placeholder="Enter player name" type="text">
+    <button on:click={establishConnection}>Connect</button>
     {/if}
+    {#if connected}
     <div>
         Players:
         <div class="players">
             {#each players as { name, playerID }}
-                <div id={playerID} class="player">{name}</div>
+            <div id={playerID} class="player">{name}</div>
+            {:else}
+            <p>No players yet</p>
             {/each}
         </div>
     </div>
+    {/if}
 </main>
 
 <style>
