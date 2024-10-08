@@ -33,6 +33,22 @@
         });
         socket.on("players", (playersFromServer) => players = playersFromServer);
     };
+
+    let room = {
+        id: '',
+        name: '',
+        maxPlayers: 0,
+        rounds: 0,
+        private: false,
+        password: ''
+    }
+
+    let drawing = {
+        x: 0,
+        y: 0,
+        clr: "#FFFFFF",
+        width: 5
+    }
 </script>
 
 <main>
