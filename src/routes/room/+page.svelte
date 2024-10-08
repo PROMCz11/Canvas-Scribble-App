@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from "svelte";
     import ControlPanel from "../../lib/components/ControlPanel.svelte";
+    import Chat from "../../lib/components/Chat.svelte";
     import { isCanvasPressed } from "$lib/stores";
     import { isDrawingPlaying } from "$lib/stores";
     import { strokeColor } from "$lib/stores";
@@ -169,6 +170,7 @@
         on:touchend|preventDefault={stopDrawing}
         style="cursor: url('{cursorBrushSrc}') 0 100, auto;"
     ></canvas>
+    <Chat />
 </main>
 
 <style>
