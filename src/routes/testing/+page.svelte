@@ -37,6 +37,7 @@
 </script>
 
 <main>
+    <p><a href="/">Go back</a></p>
     {#if !connected}
     <input on:keydown={e => {
         if(e.key === "Enter") {

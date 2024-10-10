@@ -1,25 +1,25 @@
 <script>
     let messages = [
-        // {content: "galaxy"},
-        // {content: "night"},
-        // {content: "dog"},
-        // {content: "laundry"},
-        // {content: "chair"},
-        // {content: "dispair"},
-        // {content: "person"},
+        {name: "Zain", content: "galaxy"},
+        {name: "Mo", content: "night"},
+        {name: "Zain", content: "dog"},
+        {name: "Mo", content: "laundry"},
+        {name: "Zain", content: "chair"},
+        {name: "Zain", content: "dispair"},
+        {name: "Mo", content: "person"},
     ]
 
     const sendMessage = content => {
         // socket emit a message* event
-        messages = [...messages, {content: content}];
+        messages = [...messages, {name: "username", content: content}];
     }
 </script>
 
 <div class="component">
     <div class="messages-container">
-        {#each messages as { content }}
+        {#each messages as { name, content }}
             <div class="message">
-                {content}
+                <span class="name">{name}: </span><span>{content}</span>
             </div>
         {/each}
     </div>
@@ -50,6 +50,11 @@
     .message {
         margin-top: .5rem;
         padding-bottom: .5rem;
+        word-break: break-all;
+    }
+
+    .message .name {
+        color: #757575;
     }
 
     .message:not(.message:last-of-type) {
