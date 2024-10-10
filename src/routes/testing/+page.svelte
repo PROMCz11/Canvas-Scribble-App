@@ -1,20 +1,5 @@
 <script>
-    // import { io } from "$lib/webSocketConnection.js";
     import { io } from "socket.io-client";
-	import { onMount } from "svelte";
-
-    // const socket = io("ws://172.20.10.2:4000", { transports: ["websocket"] });
-
-    // let id = '';
-    
-    // onMount(() => {
-    //     socket.on("connect", () => console.log("connected"));
-    //     socket.on("message", (msg) => {
-    //         id = msg;
-    //         socket.emit("event", "ID from Client: " + id);
-    //     });
-    //     socket.on("disconnect", () => console.log("disconnected"));
-    // });
 
     let connected = false;
     let nameFromInput = "";
