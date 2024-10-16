@@ -60,7 +60,7 @@
         display: flex;
         gap: .5rem;
         flex-direction: column;
-        border-right: 1px solid white;
+        border-right: 1px solid #a1a1a166;
         position: relative;
     }
 
@@ -116,7 +116,7 @@
             flex-direction: row;
             flex-wrap: wrap;
             border: 0;
-            border-bottom: 1px solid white;
+            border-bottom: 1px solid #a1a1a166;
         }   
     }
 </style>

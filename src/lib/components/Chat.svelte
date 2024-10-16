@@ -37,7 +37,7 @@
         max-height: 100vh;
         max-height: 100svh;
         overflow: auto;
-        border-left: 1px solid white;
+        border-left: 1px solid #a1a1a166;
 
         display: flex;
         flex-direction: column;
@@ -58,6 +58,6 @@
     }
 
     .message:not(.message:last-of-type) {
-        border-bottom: 1px solid #757575;
+        border-bottom: 1px solid #a1a1a166;
     }
 </style>

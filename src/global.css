@@ -61,15 +61,15 @@ select {
 
 body {
     background-color: black;
-    color: white;
+    color: #a1a1a1;
     font-family: monospace;
 }
 
 button {
-    border: 2px solid white;
+    border: 2px solid #a1a1a166;
     background-color: transparent;
     padding: .2rem .4rem;
-    color: white;
+    color: #a1a1a1;
     transition: all 50ms ease-in-out;
     cursor: pointer;
 }
@@ -80,7 +80,7 @@ button:active {
 }
 
 a {
-    color: white;
+    color: #a1a1a1;
 }
 
 input[type="range"] {
@@ -124,6 +124,6 @@ input[type="range"]::-moz-range-thumb {
 
 input[type="text"] {
     background-color: black;
-    border: 1px solid white;
-    color: white;
+    border: 1px solid #a1a1a166;
+    color: #a1a1a1;
 }
