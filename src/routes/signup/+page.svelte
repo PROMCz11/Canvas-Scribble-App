@@ -1,23 +1,71 @@
 <script>
-    
+    import { insertCookie } from "$lib/cookieHandlers";
+    let username, email, password;
+    const signup = () => {
+        if(!email || !password || username) {
+            // Needs better validation
+            console.log("Provide valid info");
+        }
+        fetch("https://canvas-scribble-app.onrender.com/api/player/register", {
+            method: "POST",
+            body: JSON.stringify({
+                username: username,
+                email: email,
+                password: password
+            }),
+            headers: {"Content-Type": "application/json"},
+            credentials: "include"
+        })
+        .then(res => res.json())
+        .then(json => {
+            if(json.status) {
+                const authToken = json.data.authToken;
+                insertCookie("authToken", authToken);
+                // goto lobby
+            }
+
+            else {
+                console.log(json.message);
+            }
+        })
+        .catch(err => console.log(err));
+    }
 </script>
 
 <main>
     <div class="signup-info">
         <h2>Create an account</h2>
         <p>Username</p>
-        <input type="text" placeholder="Enter your username">
+        <input
+        on:keydown={e => {
+            if(e.key === "Enter") {
+                signup();
+            }
+        }}
+        bind:value={username} type="text" placeholder="Enter your username">
         <p>Email</p>
-        <input type="text" placeholder="Enter your email">
+        <input
+        on:keydown={e => {
+            if(e.key === "Enter") {
+                signup();
+            }
+        }}
+        bind:value={email} type="text" placeholder="Enter your email">
         <p>Password</p>
-        <input type="text" placeholder="Enter a new password">
+        <input
+        on:keydown={e => {
+            if(e.key === "Enter") {
+                signup();
+            }
+        }}
+        bind:value={password} type="text" placeholder="Enter a new password">
     </div>
-    <button>Signup</button>
+    <button on:click={signup}>Signup</button>
     <div>
         <p>Already have an account?</p>
         <a href="login">Login</a>
     </div>
-    <a href="/">Go back</a>
+    <a href="/">Back to menu</a>
 </main>
 
 <style>
