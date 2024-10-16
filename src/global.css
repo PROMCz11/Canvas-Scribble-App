@@ -74,7 +74,7 @@ button {
     cursor: pointer;
 }
 
-button:hover, input[type="text"]:hover {
+button:hover, input[type="text"]:hover, input[type="number"]:hover, input[type="password"]:hover {
     border-color: white;
     color: white;
 }
@@ -131,7 +131,7 @@ input[type="range"]::-moz-range-thumb {
     width: 1rem;
 }
 
-input[type="text"] {
+input[type="text"], input[type="number"], input[type="password"] {
     background-color: black;
     border: 1px solid #a1a1a166;
     color: #a1a1a1;

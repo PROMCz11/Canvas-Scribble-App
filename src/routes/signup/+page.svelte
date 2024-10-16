@@ -58,7 +58,7 @@
                 signup();
             }
         }}
-        bind:value={password} type="text" placeholder="Enter a new password">
+        bind:value={password} type="password" placeholder="Enter a new password">
     </div>
     <button on:click={signup}>Signup</button>
     <div>

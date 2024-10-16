@@ -49,7 +49,7 @@
                 login();
             }
         }}
-        bind:value={password} type="text" placeholder="Enter your password">
+        bind:value={password} type="password" placeholder="Enter your password">
     </div>
     <button on:click={login}>Login</button>
     <div>
