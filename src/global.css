@@ -135,4 +135,5 @@ input[type="text"], input[type="number"], input[type="password"] {
     background-color: black;
     border: 1px solid #a1a1a166;
     color: #a1a1a1;
+    width: 100%;
 }

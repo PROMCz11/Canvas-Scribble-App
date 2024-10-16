@@ -13,8 +13,7 @@
                 email: email,
                 password: password
             }),
-            headers: {"Content-Type": "application/json"},
-            credentials: "include"
+            headers: {"Content-Type": "application/json"}
         })
         .then(res => res.json())
         .then(json => {
