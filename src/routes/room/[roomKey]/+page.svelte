@@ -24,13 +24,52 @@
 
         socket.on("send", (message) => {
             console.log("From server: " + message);
+            messages = [...messages, {content: message}];
         })
     })
 
     let players = [];
-    const sendHello = () => {
-        socket.emit("sendMessage", "Hello");
+    const sendMessage = () => {
+        if(!messageContent) return;
+        socket.emit("sendMessage", messageContent);
     }
+
+    let messageContent;
+    let messages = [];
 </script>
 
-<button on:click={sendHello}>Say Hello</button>
+<main>
+    <input bind:value={messageContent}
+    on:keydown={e => {
+        if(e.key === "Enter") {
+            sendMessage();
+            e.target.value = "";
+        }
+    }}
+    type="text" placeholder="Type a message">
+    <div class="message-container">
+        {#each messages as { content }}
+            <div class="message">
+                <span>Unknown: </span><span>{content}</span>
+            </div>
+        {/each}
+    </div>
+</main>
+
+<style>
+    main {
+        padding: .5rem;
+    }
+
+    .message-container {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        margin-block: .5rem;
+    }
+
+    .message {
+        border: 1px solid;
+        padding: .1rem;
+    }
+</style>
