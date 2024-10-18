@@ -2,7 +2,7 @@
     import { insertCookie } from "$lib/cookieHandlers";
     let username, email, password;
     const signup = () => {
-        if(!email || !password || username) {
+        if(!email || !password || !username) {
             // Needs better validation
             console.log("Provide valid info");
         }
@@ -21,6 +21,7 @@
                 const authToken = json.data.authToken;
                 insertCookie("authToken", authToken);
                 // goto lobby
+                console.log("signed up successfully");
             }
 
             else {

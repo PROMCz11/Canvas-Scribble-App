@@ -20,6 +20,7 @@
                 const authToken = json.data.authToken;
                 insertCookie("authToken", authToken);
                 // goto lobby
+                console.log("logged in successfully");
             }
 
             else {

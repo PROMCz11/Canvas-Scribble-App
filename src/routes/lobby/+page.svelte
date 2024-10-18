@@ -1,42 +1,73 @@
 <script>
+    import { getCookie } from "$lib/cookieHandlers";
     let isRoomPrivate = false;
-    let rooms = [
-        {
-            id: '3',
-            name: "zain's room",
-            maxPlayers: 3,
-            rounds: 4,
-            isPrivate: false,
-            password: ''
-        },
-        {
-            id: '3',
-            name: "zain's room",
-            maxPlayers: 3,
-            rounds: 4,
-            isPrivate: false,
-            password: ''
-        },
-        {
-            id: '3',
-            name: "zain's room",
-            maxPlayers: 3,
-            rounds: 4,
-            isPrivate: false,
-            password: ''
-        },
-    ]
+    export let data;
+    let { rooms } = data;
+
+    const getRooms = () => {
+        fetch("https://canvas-scribble-app.onrender.com/api/room/getall", {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getCookie("authToken")}`
+            }
+        })
+        .then(res => res.json())
+        .then(json => rooms = json.data.rooms)
+        .catch(err => console.log(err));
+    }
+
+    // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb29tSWQiOiI2NzEyNDhiODk0NTk2NDVkNjkxNGNjNzgiLCJpYXQiOjE3MjkyNTE1MTIsImV4cCI6MTczMjg1MTUxMn0.6DYtEtToStBzISdSizxB7hSBw3Zw06K17ZnvP5gFYiI"
+
+    let createName, createMaxPlayers, createRounds, createPassword;
+    const createRoom = () => {
+        fetch("https://canvas-scribble-app.onrender.com/api/room/create", {
+            method: "POST",
+            body: JSON.stringify({
+                roomName: createName,
+                password: createPassword,
+                maxPlayers: createMaxPlayers,
+                rounds: createRounds
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getCookie("authToken")}`
+            }
+        })
+        .then(res => res.json())
+        .then(json => console.log(json))
+        .catch(err => console.log(err));
+    }
+
+    // To be edited
+    const joinRoom = () => {
+        fetch("https://canvas-scribble-app.onrender.com/api/room/join", {
+            method: "PATCH",
+            body: JSON.stringify({
+                roomId: "6711625d364eed500fca9818",
+                password: "roomPass"
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getCookie("authToken")}`
+            }
+        })
+        .then(res => res.json())
+        .then(json => console.log(json))
+        .catch(err => console.log(err));
+    }
+
+    // mechanism for joining a room, create a dynamic route with a slug, have the slug represent the room's id, a request to that URL triggers a load function that connects to that specific room, if something goes wrong, we're redirected to the lobby with an error message (in the cookies maybe)
 </script>
 
 <main>
     <div class="controls">
         <h3>Create a room</h3>
         <p>Name</p>
-        <input type="text" placeholder="My Room">
+        <input bind:value={createName} type="text" placeholder="My Room">
         <p>Max Players</p>
-        <input type="number" placeholder="2" min="2" max="8">
+        <input bind:value={createMaxPlayers} type="number" placeholder="2" min="2" max="8">
         <p>Rounds</p>
-        <input type="number" placeholder="1" min="1" max="4">
+        <input bind:value={createRounds} type="number" placeholder="1" min="1" max="4">
         <p>Access</p>
         <div class="access">
             <button on:click={() => isRoomPrivate = false} class:selected={!isRoomPrivate}>Public</button>
@@ -44,24 +75,29 @@
         </div>
         {#if isRoomPrivate}
             <p>Password</p>
-            <input type="password" placeholder="room's password">
+            <input bind:value={createPassword} type="password" placeholder="room's password">
         {/if}
         <div>
-            <button>Create room</button>
+            <button on:click={createRoom}>Create room</button>
         </div>
         <a style="margin-top: .5rem; display: block" href="/">Back to menu</a>
+        <!-- to be deleted -->
+        <button on:click={joinRoom}>Join<br>Test Room</button>
     </div>
     <div class="room-container">
-        <h3>Join a room</h3>
-        {#each rooms as { id, name, maxPlayers, rounds, isPrivate, password }}
+        <div class="top-part">
+            <h3>Join a room</h3>
+            <button on:click={getRooms}>Refresh</button>
+        </div>
+        {#each rooms as { _id, roomName, maxPlayers, rounds, isPrivate, password }}
             <div class="room">
                 <div>
                     <p>ID</p>
-                    <p>{id}</p>
+                    <p>{_id}</p>
                 </div>
                 <div>
                     <p>Name</p>
-                    <p>{name}</p>
+                    <p>{roomName}</p>
                 </div>
                 <div>
                     <p>Max Players</p>
@@ -78,6 +114,7 @@
                         <p>Public</p>
                     {/if}
                 </div>
+                <button>Join</button>
             </div>
         {/each}
     </div>
@@ -117,11 +154,14 @@
         border-color: white;
     }
 
-    .room-container h3 {
+    .room-container .top-part {
         position: sticky;
         top: 0;
         padding-top: .5rem;
         background-color: black;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .room {
@@ -145,5 +185,9 @@
 
     .room > div > p:last-of-type {
         color: #b1b1b1;
+    }
+
+    .room > button {
+        margin-left: auto;
     }
 </style>
