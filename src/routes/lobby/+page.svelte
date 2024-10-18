@@ -43,8 +43,8 @@
         fetch("https://canvas-scribble-app.onrender.com/api/room/join", {
             method: "PATCH",
             body: JSON.stringify({
-                roomId: "6711625d364eed500fca9818",
-                password: "roomPass"
+                roomId: "671248b89459645d6914cc78",
+                password: "test"
             }),
             headers: {
                 "Content-Type": "application/json",
