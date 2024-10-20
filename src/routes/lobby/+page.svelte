@@ -3,6 +3,7 @@
     let isRoomPrivate = false;
     export let data;
     let { rooms } = data;
+    import { goto } from "$app/navigation";
 
     const getRooms = () => {
         fetch("https://canvas-scribble-app.onrender.com/api/room/getall", {
@@ -12,11 +13,10 @@
             }
         })
         .then(res => res.json())
-        .then(json => rooms = json.data.rooms)
+        // .then(json => rooms = json.data.rooms)
+        .then(json => console.log(json))
         .catch(err => console.log(err));
     }
-
-    // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb29tSWQiOiI2NzEyNDhiODk0NTk2NDVkNjkxNGNjNzgiLCJpYXQiOjE3MjkyNTE1MTIsImV4cCI6MTczMjg1MTUxMn0.6DYtEtToStBzISdSizxB7hSBw3Zw06K17ZnvP5gFYiI"
 
     let createName, createMaxPlayers, createRounds, createPassword;
     const createRoom = () => {
@@ -34,7 +34,10 @@
             }
         })
         .then(res => res.json())
-        .then(json => console.log(json))
+        .then(json => {
+            console.log(json);
+            goto(`room/${json.data.roomToken}`);
+        })
         .catch(err => console.log(err));
     }
 
@@ -43,8 +46,8 @@
         fetch("https://canvas-scribble-app.onrender.com/api/room/join", {
             method: "PATCH",
             body: JSON.stringify({
-                roomId: "671248b89459645d6914cc78",
-                password: "test"
+                roomId: "9af92a09-eb43-469e-98db-96c92d34db0a",
+                password: "zain12321"
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -52,7 +55,10 @@
             }
         })
         .then(res => res.json())
-        .then(json => console.log(json))
+        .then(json => {
+            console.log(json);
+            goto(`room/${json.data.roomToken}`);
+        })
         .catch(err => console.log(err));
     }
 
@@ -89,7 +95,7 @@
             <h3>Join a room</h3>
             <button on:click={getRooms}>Refresh</button>
         </div>
-        {#each rooms as { _id, roomName, maxPlayers, rounds, isPrivate, password }}
+        <!-- {#each rooms as { _id, roomName, maxPlayers, rounds, isPrivate, password }}
             <div class="room">
                 <div>
                     <p>ID</p>
@@ -116,7 +122,7 @@
                 </div>
                 <button>Join</button>
             </div>
-        {/each}
+        {/each} -->
     </div>
 </main>
 
