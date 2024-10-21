@@ -75,27 +75,34 @@
 <main>
     <div class="controls">
         <h3>Create a room</h3>
-        <p>Name</p>
-        <input bind:value={createName} type="text" placeholder="My Room">
-        <p>Max Players</p>
-        <input bind:value={createMaxPlayers} type="number" placeholder="2" min="2" max="8">
-        <p>Rounds</p>
-        <input bind:value={createRounds} type="number" placeholder="1" min="1" max="4">
-        <p>Access</p>
-        <div class="access">
-            <button on:click={() => isRoomPrivate = false} class:selected={!isRoomPrivate}>Public</button>
-            <button on:click={() => isRoomPrivate = true} class:selected={isRoomPrivate}>Private</button>
+        <div>
+            <p>Name</p>
+            <input bind:value={createName} type="text" placeholder="My Room">
+        </div>
+        <div>
+            <p>Max Players</p>
+            <input bind:value={createMaxPlayers} type="number" placeholder="2" min="2" max="8">
+        </div>
+        <div>
+            <p>Rounds</p>
+            <input bind:value={createRounds} type="number" placeholder="1" min="1" max="4">
+        </div>
+        <div>
+            <p>Access</p>
+            <div>
+                <button on:click={() => isRoomPrivate = false} class:selected={!isRoomPrivate}>Public</button>
+                <button on:click={() => isRoomPrivate = true} class:selected={isRoomPrivate}>Private</button>
+            </div>
         </div>
         {#if isRoomPrivate}
-            <p>Password</p>
-            <input bind:value={createPassword} type="password" placeholder="room's password">
+            <div>
+                <p>Password</p>
+                <input bind:value={createPassword} type="password" placeholder="room's password">
+            </div>
         {/if}
-        <div>
-            <button on:click={createRoom}>Create room</button>
-        </div>
+        <div><button on:click={createRoom}>Create room</button></div>
         <a style="margin-top: .5rem; display: block" href="/">Back to menu</a>
-        <!-- to be deleted -->
-        <!-- <button on:click={e => joinRoom(e.target.parentElement.id)}>Join<br>Test Room</button> -->
+        <a class="logout" href="logout"><button>Logout</button></a>
     </div>
     <div class="room-container-wrapper">
         <div class="top-part">
@@ -148,6 +155,9 @@
         max-height: 100vh;
         max-height: 100svh;
         padding: .5rem;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
     }
 
     .room-container-wrapper {
@@ -165,10 +175,6 @@
         gap: .5rem;
     }
 
-    .controls input, .access {
-        margin-bottom: .5rem;
-    }
-
     button.selected {
         background-color: white;
         color: black;
@@ -182,7 +188,6 @@
         background-color: black;
         display: flex;
         justify-content: space-between;
-        align-items: center;
     }
 
     .room {
@@ -212,5 +217,9 @@
 
     .room > button {
         margin-left: auto;
+    }
+
+    .logout {
+        margin-top: auto;
     }
 </style>
