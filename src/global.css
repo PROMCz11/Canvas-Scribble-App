@@ -140,6 +140,6 @@ input[type="text"], input[type="number"], input[type="password"], input[type="em
 
 @media (max-width: 700px) {
     body {
-        font-size: 1.2rem;
+        font-size: 1.25rem;
     }
 }
