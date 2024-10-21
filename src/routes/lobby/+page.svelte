@@ -13,8 +13,12 @@
             }
         })
         .then(res => res.json())
-        // .then(json => rooms = json.data.rooms)
-        .then(json => console.log(json))
+        .then(json => {
+            const roomsObj = json.data.rooms;
+            const roomsArr = Object.keys(roomsObj).map(key => roomsObj[key]);
+            rooms = roomsArr;
+            console.log(roomsArr);
+        })
         .catch(err => console.log(err));
     }
 
@@ -42,11 +46,13 @@
     }
 
     // To be edited
-    const joinRoom = () => {
+    const joinRoom = (roomIDFromDOM) => {
+        console.log("working");
+        console.log(roomIDFromDOM);
         fetch("https://canvas-scribble-app.onrender.com/api/room/join", {
             method: "PATCH",
             body: JSON.stringify({
-                roomId: "9af92a09-eb43-469e-98db-96c92d34db0a",
+                roomId: roomIDFromDOM,
                 password: "zain12321"
             }),
             headers: {
@@ -88,18 +94,18 @@
         </div>
         <a style="margin-top: .5rem; display: block" href="/">Back to menu</a>
         <!-- to be deleted -->
-        <button on:click={joinRoom}>Join<br>Test Room</button>
+        <!-- <button on:click={e => joinRoom(e.target.parentElement.id)}>Join<br>Test Room</button> -->
     </div>
     <div class="room-container">
         <div class="top-part">
             <h3>Join a room</h3>
             <button on:click={getRooms}>Refresh</button>
         </div>
-        <!-- {#each rooms as { _id, roomName, maxPlayers, rounds, isPrivate, password }}
-            <div class="room">
+        {#each rooms as { roomId, roomName, maxPlayers, rounds, isPrivate, password }}
+            <div class="room" id={roomId}>
                 <div>
                     <p>ID</p>
-                    <p>{_id}</p>
+                    <p>{roomId}</p>
                 </div>
                 <div>
                     <p>Name</p>
@@ -120,9 +126,9 @@
                         <p>Public</p>
                     {/if}
                 </div>
-                <button>Join</button>
+                <button on:click={e => joinRoom(e.target.parentElement.id)}>Join</button>
             </div>
-        {/each} -->
+        {/each}
     </div>
 </main>
 

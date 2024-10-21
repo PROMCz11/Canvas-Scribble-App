@@ -9,7 +9,10 @@ export const load = async ({ cookies, fetch }) => {
         }
     });
     const roomsData = await roomsRes.json();
-    const rooms = roomsData.data.rooms;
+    const roomsObj = roomsData.data.rooms;
+    const roomsArr = Object.keys(roomsObj).map(key => roomsObj[key]);
+    const rooms = roomsArr;
+    console.log(rooms);
     return {
         rooms
     };
