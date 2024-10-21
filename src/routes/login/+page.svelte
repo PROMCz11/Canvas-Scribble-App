@@ -2,7 +2,9 @@
     import { insertCookie } from "$lib/cookieHandlers";
     import { goto } from "$app/navigation";
     let email, password;
+    let loading = false;
     const login = () => {
+        loading = true;
         errorMessage = "";
         if(!email || !password) {
             // Needs better validation
@@ -18,6 +20,7 @@
         })
         .then(res => res.json())
         .then(json => {
+            loading = false;
             if(json.status) {
                 const authToken = json.data.authToken;
                 insertCookie("authToken", authToken);
@@ -62,6 +65,9 @@
     {#if errorMessage}  
         <p style="color: red;">{errorMessage}</p>
     {/if}
+    {#if loading}
+        <p>Checking...</p>
+    {/if}
     <button on:click={login}>Login</button>
     <div>
         <p>Don't have an account?</p>
@@ -88,9 +94,5 @@
 
     main > div:not(.login-info) {
         text-align: center;
-    }
-
-    input[type="text"] {
-        width: 100%;
     }
 </style>
