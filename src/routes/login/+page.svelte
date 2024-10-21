@@ -1,5 +1,6 @@
 <script>
     import { insertCookie } from "$lib/cookieHandlers";
+    import { getCookie } from "$lib/cookieHandlers";
     import { goto } from "$app/navigation";
     let email, password;
     let loading = false;
@@ -24,6 +25,9 @@
             if(json.status) {
                 const authToken = json.data.authToken;
                 insertCookie("authToken", authToken);
+                if(!getCookie("registeredUser")) {
+                    insertCookie("registeredUser", true)
+                }
                 console.log("logged in successfully");
                 goto("lobby");
             }
@@ -66,7 +70,7 @@
         <p style="color: red;">{errorMessage}</p>
     {/if}
     {#if loading}
-        <p>Checking...</p>
+        <p>Logging in...</p>
     {/if}
     <button on:click={login}>Login</button>
     <div>
