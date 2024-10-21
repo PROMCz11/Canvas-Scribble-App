@@ -96,39 +96,41 @@
         <!-- to be deleted -->
         <!-- <button on:click={e => joinRoom(e.target.parentElement.id)}>Join<br>Test Room</button> -->
     </div>
-    <div class="room-container">
+    <div class="room-container-wrapper">
         <div class="top-part">
             <h3>Join a room</h3>
             <button on:click={getRooms}>Refresh</button>
         </div>
-        {#each rooms as { roomId, roomName, maxPlayers, rounds, isPrivate, password }}
-            <div class="room" id={roomId}>
-                <div>
-                    <p>ID</p>
-                    <p>{roomId}</p>
+        <div class="room-container">
+            {#each rooms as { roomId, roomName, maxPlayers, rounds, isPrivate, password }}
+                <div class="room" id={roomId}>
+                    <div>
+                        <p>ID</p>
+                        <p>{roomId}</p>
+                    </div>
+                    <div>
+                        <p>Name</p>
+                        <p>{roomName}</p>
+                    </div>
+                    <div>
+                        <p>Max Players</p>
+                        <p>{maxPlayers}</p>
+                    </div>
+                    <div>
+                        <p>Rounds</p>
+                        <p>{rounds}</p>
+                    </div>
+                    <div>
+                        {#if isPrivate}
+                            <p>Private</p>
+                        {:else}
+                            <p>Public</p>
+                        {/if}
+                    </div>
+                    <button on:click={e => joinRoom(e.target.parentElement.id)}>Join</button>
                 </div>
-                <div>
-                    <p>Name</p>
-                    <p>{roomName}</p>
-                </div>
-                <div>
-                    <p>Max Players</p>
-                    <p>{maxPlayers}</p>
-                </div>
-                <div>
-                    <p>Rounds</p>
-                    <p>{rounds}</p>
-                </div>
-                <div>
-                    {#if isPrivate}
-                        <p>Private</p>
-                    {:else}
-                        <p>Public</p>
-                    {/if}
-                </div>
-                <button on:click={e => joinRoom(e.target.parentElement.id)}>Join</button>
-            </div>
-        {/each}
+            {/each}
+        </div>
     </div>
 </main>
 
@@ -147,12 +149,18 @@
         padding: .5rem;
     }
 
-    .room-container {
+    .room-container-wrapper {
         flex: 1;
         padding: .5rem;
         padding-top: 0;
         display: flex;
         flex-direction: column;
+        gap: .5rem;
+    }
+
+    .room-container {
+        display: flex;
+        flex-wrap: wrap;
         gap: .5rem;
     }
 
@@ -166,7 +174,7 @@
         border-color: white;
     }
 
-    .room-container .top-part {
+    .room-container-wrapper .top-part {
         position: sticky;
         top: 0;
         padding-top: .5rem;
@@ -178,11 +186,13 @@
 
     .room {
         display: flex;
+        flex-direction: column;
         gap: .5rem;
-        align-items: center;
-        flex-wrap: wrap;
+        /* align-items: center; */
+        /* flex-wrap: wrap; */
         padding: .5rem;
         border: 1px solid #a1a1a166;
+        max-width: max-content;
     }
 
     .room > div {

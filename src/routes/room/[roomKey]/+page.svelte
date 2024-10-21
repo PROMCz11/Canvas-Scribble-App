@@ -4,6 +4,7 @@
     
     import { io } from "socket.io-client";
 	import { onMount } from "svelte";
+    import { goto } from "$app/navigation";
 
     let socket;
 
@@ -27,7 +28,10 @@
             messages = [...messages, {content: message}];
         })
 
-        socket.on("error", error => console.log(error));
+        socket.on("error", error => {
+            console.log(error);
+            goto("lobby");
+        });
     })
 
     let players = [];
