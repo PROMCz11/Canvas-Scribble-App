@@ -30,7 +30,8 @@
                 roomName: createName,
                 password: createPassword,
                 maxPlayers: createMaxPlayers,
-                rounds: createRounds
+                rounds: createRounds,
+                isPrivate: isRoomPrivate
             }),
             headers: {
                 "Content-Type": "application/json",
