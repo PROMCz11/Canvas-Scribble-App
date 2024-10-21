@@ -1,5 +1,6 @@
 <script>
     import { insertCookie } from "$lib/cookieHandlers";
+    import { goto } from "$app/navigation";
     let email, password;
     const login = () => {
         if(!email || !password) {
@@ -19,16 +20,19 @@
             if(json.status) {
                 const authToken = json.data.authToken;
                 insertCookie("authToken", authToken);
-                // goto lobby
                 console.log("logged in successfully");
+                goto("lobby");
             }
 
             else {
                 console.log(json.message);
+                errorMessage = json.message;
             }
         })
         .catch(err => console.log(err));
     }
+
+    let errorMessage = "";
 </script>
 
 <main>
@@ -41,7 +45,7 @@
                 login();
             }
         }}
-        bind:value={email} type="text" placeholder="example@gmail.com">
+        bind:value={email} type="email" placeholder="example@gmail.com">
         <p>Password</p>
         <input
         on:keydown={e => {
@@ -51,6 +55,9 @@
         }}
         bind:value={password} type="password" placeholder="Enter your password">
     </div>
+    {#if errorMessage}  
+        <p style="color: red;">{errorMessage}</p>
+    {/if}
     <button on:click={login}>Login</button>
     <div>
         <p>Don't have an account?</p>

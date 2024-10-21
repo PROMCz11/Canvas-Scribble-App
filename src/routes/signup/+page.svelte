@@ -1,5 +1,6 @@
 <script>
     import { insertCookie } from "$lib/cookieHandlers";
+    import { goto } from "$app/navigation";
     let username, email, password;
     const signup = () => {
         if(!email || !password || !username) {
@@ -20,16 +21,19 @@
             if(json.status) {
                 const authToken = json.data.authToken;
                 insertCookie("authToken", authToken);
-                // goto lobby
                 console.log("signed up successfully");
+                goto("lobby");
             }
 
             else {
                 console.log(json.message);
+                errorMessage = json.message;
             }
         })
         .catch(err => console.log(err));
     }
+
+    let errorMessage = "";
 </script>
 
 <main>
@@ -50,7 +54,7 @@
                 signup();
             }
         }}
-        bind:value={email} type="text" placeholder="Enter your email">
+        bind:value={email} type="email" placeholder="Enter your email">
         <p>Password</p>
         <input
         on:keydown={e => {
@@ -60,6 +64,9 @@
         }}
         bind:value={password} type="password" placeholder="Enter a new password">
     </div>
+    {#if errorMessage}  
+        <p style="color: red;">{errorMessage}</p>
+    {/if}
     <button on:click={signup}>Signup</button>
     <div>
         <p>Already have an account?</p>
