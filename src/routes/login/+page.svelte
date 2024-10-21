@@ -29,7 +29,10 @@
                 errorMessage = json.message;
             }
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+            errorMessage = err;
+        });
     }
 
     let errorMessage = "";
