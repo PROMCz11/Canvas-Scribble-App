@@ -3,6 +3,7 @@
     import { goto } from "$app/navigation";
     let username, email, password;
     const signup = () => {
+        errorMessage = "";
         if(!email || !password || !username) {
             // Needs better validation
             console.log("Provide valid info");

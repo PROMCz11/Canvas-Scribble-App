@@ -26,6 +26,8 @@
             console.log("From server: " + message);
             messages = [...messages, {content: message}];
         })
+
+        socket.on("error", error => console.log(error));
     })
 
     let players = [];
