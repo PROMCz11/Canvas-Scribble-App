@@ -10,7 +10,7 @@
 </script>
 
 <div class="component">
-    <p>Room #32987</p>
+    <p>Sandbox</p>
     <div class="stroke-display">
         <p>Stroke Overview</p>
         <div style="background-color: {$strokeColor}; width: {$strokeWidth * 1.15}px;"></div>

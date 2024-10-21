@@ -4,9 +4,9 @@
         <p>Follow one of the links below<br>to begin testing</p>
         <div>
             <a href="/lobby"><button>Lobby</button></a>
-            <a href="/signup"><button>Signup</button></a>
-            <a href="/login"><button>Login</button></a>
-            <a href="/room"><button>Canvas Sandbox</button></a>
+            <!-- <a href="/signup"><button>Signup</button></a>
+            <a href="/login"><button>Login</button></a> -->
+            <a href="/room"><button>Sandbox</button></a>
         </div>
     </div>
 </main>

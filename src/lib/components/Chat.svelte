@@ -1,12 +1,12 @@
 <script>
     let messages = [
-        {name: "Zain", content: "galaxy"},
-        {name: "Mo", content: "night"},
-        {name: "Zain", content: "dog"},
-        {name: "Mo", content: "laundry"},
-        {name: "Zain", content: "chair"},
-        {name: "Zain", content: "dispair"},
-        {name: "Mo", content: "person"},
+        // {name: "Zain", content: "galaxy"},
+        // {name: "Mo", content: "night"},
+        // {name: "Zain", content: "dog"},
+        // {name: "Mo", content: "laundry"},
+        // {name: "Zain", content: "chair"},
+        // {name: "Zain", content: "dispair"},
+        // {name: "Mo", content: "person"},
     ]
 
     const sendMessage = content => {
