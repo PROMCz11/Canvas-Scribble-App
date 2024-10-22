@@ -4,16 +4,16 @@
     export let data;
     let { rooms } = data;
 
-    rooms = [
-        {
-            roomId: "46e9510a-b650-4989-89ab-d387800aa0d5",
-            roomName: "Example Room",
-            maxPlayers: 7,
-            rounds: 3,
-            players: 5,
-            isPrivate: true
-        }
-    ]
+    // rooms = [
+    //     {
+    //         roomId: "46e9510a-b650-4989-89ab-d387800aa0d5",
+    //         roomName: "Example Room",
+    //         maxPlayers: 7,
+    //         rounds: 3,
+    //         players: 5,
+    //         isPrivate: true
+    //     }
+    // ]
     import { goto } from "$app/navigation";
 
     const getRooms = () => {

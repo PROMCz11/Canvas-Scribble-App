@@ -23,14 +23,14 @@
             console.log(playersFromSocket);
         })
 
-        socket.on("send", (message) => {
-            console.log("From server: " + message);
-            messages = [...messages, {content: message}];
+        socket.on("send", (messageData) => {
+            const { playerName, message } = messageData;
+            messages = [...messages, { playerName: playerName, message: message }];
         })
 
         socket.on("error", error => {
             console.log(error);
-            goto("lobby");
+            goto("/lobby");
         });
     })
 
@@ -54,9 +54,9 @@
     }}
     type="text" placeholder="Type a message">
     <div class="message-container">
-        {#each messages as { content }}
+        {#each messages as { playerName, message }}
             <div class="message">
-                <span>Unknown: </span><span>{content}</span>
+                <span>{playerName}: </span><span>{message}</span>
             </div>
         {/each}
     </div>
