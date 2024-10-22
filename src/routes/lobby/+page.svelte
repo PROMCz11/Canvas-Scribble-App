@@ -14,6 +14,7 @@
     //         isPrivate: true
     //     }
     // ]
+    
     import { goto } from "$app/navigation";
 
     const getRooms = () => {
