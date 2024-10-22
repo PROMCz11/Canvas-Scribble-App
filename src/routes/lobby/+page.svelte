@@ -3,6 +3,17 @@
     let isRoomPrivate = false;
     export let data;
     let { rooms } = data;
+
+    rooms = [
+        {
+            roomId: "46e9510a-b650-4989-89ab-d387800aa0d5",
+            roomName: "Example Room",
+            maxPlayers: 7,
+            rounds: 3,
+            players: 5,
+            isPrivate: true
+        }
+    ]
     import { goto } from "$app/navigation";
 
     const getRooms = () => {
@@ -110,7 +121,7 @@
             <button on:click={getRooms}>Refresh</button>
         </div>
         <div class="room-container">
-            {#each rooms as { roomId, roomName, maxPlayers, rounds, isPrivate, password }}
+            {#each rooms as { roomId, roomName, maxPlayers, rounds, isPrivate, password, players }}
                 <div class="room" id={roomId}>
                     <div>
                         <p>ID</p>
@@ -121,8 +132,8 @@
                         <p>{roomName}</p>
                     </div>
                     <div>
-                        <p>Max Players</p>
-                        <p>{maxPlayers}</p>
+                        <p>Players</p>
+                        <p>{players}/{maxPlayers}</p>
                     </div>
                     <div>
                         <p>Rounds</p>
